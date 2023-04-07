@@ -5,6 +5,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { SocketProvider } from './context/SocketContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Start from './pages/Start.js';
+import Room from './pages/Room.js';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,10 +15,9 @@ root.render(
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Start />} />
-          <Route path ='/room:id' element={<Room />} />
+          <Route path ='/room/:id' element={<Room />} />
         </Routes>
       </BrowserRouter>
-      <App />
     </SocketProvider>
   </React.StrictMode>
 );
