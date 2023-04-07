@@ -1,0 +1,158 @@
+:root{
+  --main-bg-color: rgba(118, 217, 126, 0.874);
+  --main-text-color: rgba(238, 255, 236, 0.945);
+  --secondary-bg-color: rgba(25, 122, 42, 0.902);
+  --secondary-bg-color-darker: rgb(19, 96, 33);
+  --secondary-bg-color-lighter: rgba(22, 123, 41, 0.274);
+}
+
+body{
+  background-color: var(--main-text-color);
+}
+
+.App {
+  text-align: center;
+  width: 500px;
+  height: 500px;
+  /* display: block; */
+  margin: auto;
+  margin-top: 2%;
+  padding: 3%; /* may cause confusion */
+  border-radius: 2%;
+  font-family: 'Varela Round';
+  background-color: var(--main-bg-color);
+}
+
+button {
+  border: none;
+  border-radius: 5%;
+  padding: 7px 15px 7px 15px;
+  background-color: var(--secondary-bg-color);
+  color: var(--main-text-color);
+  font-family: 'Varela Round';
+}
+
+button:hover{
+  background-color: var(--secondary-bg-color-darker);
+}
+
+button:active{
+  transform:translateY(4px);
+}
+
+button:disabled{
+  background-color: var(--secondary-bg-color-lighter);
+  transform: none;
+}
+form {
+  text-align: left;
+  width: 300px;
+  padding-top: 120px;
+  margin: auto;
+  display: block;
+}
+
+form input{
+  width: 70px;
+  height: 30px;
+  border: none;
+  text-align: center;
+  font-size: large;
+  margin: 3%;
+  border-radius: 5px;
+  background-color: var(--main-text-color);
+  color: var(--main-bg-color);
+}
+
+form label{
+  margin: 3%;
+  margin-left: 5%;
+  font-size: large;
+  text-align: justify;
+  width: 60px;
+  height: 30px;
+  color: var(--main-text-color);
+}
+
+.start{
+  margin: 5%;
+  font-size: large;
+  width: 100px;
+  line-height: 1.5rem;
+}
+
+
+/* Game Screen */
+.playing{
+  color: var(--main-text-color);
+}
+
+.playing button{
+  width: 80px;
+  line-height: 1.25rem
+}
+
+.visibility{
+  float: left;
+  margin: 0;
+}
+
+.timer{
+  border:rgba(238, 255, 236, 0.945) solid 2px;
+  margin: 0px 200px 10px 200px;
+  padding: 2% 3% 2% 3%;
+  font-size: larger;
+}
+
+.endGame{
+  float: right;
+  display: inline;
+  margin: 0;
+}
+
+.card {
+  background-color: var(--main-text-color);
+  color: var(--main-bg-color);
+  margin: 0 5% 0 5%;
+  margin: auto;
+  padding: 5% 0 5% 0;
+  width: 300px;
+  display: block;
+  border: none;
+  font-family: 'Varela Round';
+  border-radius: 10%;
+}
+
+.card p{
+  margin: 0;
+  font-size: 1.3rem;
+  line-height:3rem;
+}
+
+.hidden{
+  font-size:0%;
+  color: var(--main-text-color);
+}
+.target {
+  padding: 5%;
+  font-weight: bold;
+  margin: 0;
+  font-size: 2.3rem !important; /* NEEDS TO BE FIXED */
+}
+
+.next, .skip{
+  margin: 10px;
+}
+
+.endGameStats{
+  color: var(--main-text-color);
+  padding: 0 10% 0 10%;
+  display: block;
+  margin: 0;
+  font-size: 2rem;
+  line-height: 5rem;
+}
+
+.endGameStats ul{
+  list-style:none;
+}
