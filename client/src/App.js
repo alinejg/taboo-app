@@ -2,13 +2,25 @@ import React from 'react';
 import Card from './components/Card';
 import EndGameStats from './components/EndGameStats';
 import Timer from './components/Timer';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import './App.css';
-import io from 'socket.io-client';
-const socket = io.connect("http://localhost:3001");
-
+import { SocketContext } from './context/SocketContext';
 
 function App() { 
+
+  const socket = useContext(SocketContext);
+
+  const joinRoom = () => {
+    socket.emit("create-room");
+  }
+
+  useEffect(() => {
+
+    socket.on("room-created", ( {roomId} ) => {
+      console.log(roomId);
+    })
+
+  }, [socket]);
 
   const [gameInfo,setGameInfo] = useState({
     numTeams: 2,
@@ -109,6 +121,7 @@ function App() {
             <label> Seconds per Turn </label>
           </div>
         </form>
+        <button onClick={joinRoom}> Join Room Test </button>
         <button className="start" onClick={() => {setStatus('playing')}}> Start Game </button>
       </div>
     );

@@ -5,7 +5,7 @@
   --secondary-bg-color-darker: rgb(19, 96, 33);
   --secondary-bg-color-lighter: rgba(22, 123, 41, 0.274);
 }
-
+ 
 body{
   background-color: var(--main-text-color);
 }
