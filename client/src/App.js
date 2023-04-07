@@ -4,8 +4,11 @@ import EndGameStats from './components/EndGameStats';
 import Timer from './components/Timer';
 import { useState, useEffect } from 'react';
 import './App.css';
+import io from 'socket.io-client';
+const socket = io.connect("http://localhost:3001");
 
-function App() {
+
+function App() { 
 
   const [gameInfo,setGameInfo] = useState({
     numTeams: 2,
