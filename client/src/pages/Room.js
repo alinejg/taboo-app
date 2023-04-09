@@ -1,17 +1,28 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { SocketContext } from '../context/SocketContext';
+import { useParams } from 'react-router-dom';
 import Card from '../components/Card.js';
 import Timer from '../components/Timer.js';
 import EndGameStats from '../components/EndGameStats.js';
 
 export default function Room(){
 
-    {console.log({roomId})}
+    const id = useParams();
+    const socket = useContext(SocketContext);
+
+    useEffect(() => { console.log(`${socket.id} joined the room`)
+        socket.emit("join-room", id); }, [id])
+
     const gameInfo = {
         numTeams: 2,
         numRounds: 2,
         roundTime: 10,
     }
+
+    let arr = []
+    for(let i = 0; i < gameInfo.numTeams; i++){ arr.push(0) }
+    const [points, setPoints] = useState(arr)
 
     const [currGame, setCurrGame] = useState({
         currTeam: 0,
@@ -20,28 +31,35 @@ export default function Room(){
     })
     
     const [status, setStatus] = useState('playing')
-    const [points, setPoints] = useState([0, 0])
     const [timer, setTimer] = useState(0)
     const [firstTurn, setFirstTurn] = useState(true)
     const [visibility, setVisibility] = useState(true)
 
-    function next() {
-    console.log("points = ", points)
-    setCurrGame({...currGame, currCard: currGame.currCard + 1})
-    const newPoints = points.map((p, i) => {
-        if(i === currGame.currTeam) {
-        return p + 1;
-        }else{
-        return p;
-        }
-    });
-    setPoints(newPoints)
-    }
+    useEffect(() => {
+        socket.on('points_updated', ( { points } ) => { setPoints(points) })
+        socket.on('status_updated', ({ status }) => { setStatus(status) })
+        socket.on('timer_updated', ({ timer }) => { setTimer(timer) })
+        socket.on('currGame_updated', ({ currGame }) => { console.log(`currGame updated by ${socket.id}`); setCurrGame(currGame) })
+        socket.on('firstTurn_updated', () => { setFirstTurn(false) })
+        // socket.on('new-user', () => {
+        //     console.log('new user joined room');
+        //     socket.emit('status_update', {id, status});
+        //     socket.emit('points_update', { id, points });
+        //     socket.emit('timer_update', { id, timer });
+        //     socket.emit('currGame_update', { id, currGame, socket });
+        // })
+    }, [socket])
+
+    useEffect(() => { socket.emit('status_update', {id, status}); }, [status])
+    useEffect(() => { socket.emit('points_update', { id, points }) }, [JSON.stringify(points)])
+    useEffect(() => { socket.emit('timer_update', { id, timer }); }, [timer])
+    useEffect(() => { socket.emit('currGame_update', { id, currGame }); }, [JSON.stringify(currGame)])
 
     function startTurn() {
         setTimer(gameInfo.roundTime);
         if(firstTurn){
           setFirstTurn(false)
+          socket.emit('firstTurn_update', { id });
         }else if(currGame.currRound === gameInfo.numRounds - 1 &&
           currGame.currTeam === gameInfo.numTeams - 1){
             setStatus('endGame')
@@ -50,14 +68,6 @@ export default function Room(){
         }else{
           setCurrGame({...currGame, currTeam: currGame.currTeam + 1})
         }
-    }
-
-    function restartGame(){
-        setCurrGame({...currGame, currTeam: 0, currRound: 0})
-        setPoints(points.map(() => {return 0}))
-        setTimer(0)
-        setFirstTurn(true)
-        setStatus('startScreen')
     }
 
     useEffect(() => {
@@ -73,10 +83,25 @@ export default function Room(){
 
     }, [timer]);
 
-    if(status === 'playing'){
+    function next() {
+        setCurrGame({...currGame, currCard: currGame.currCard + 1})
+        const newPoints = points.map((p, i) => {
+            return (i === currGame.currTeam) ? (p + 1) : p;
+        });
+        setPoints(newPoints)
+    }
 
-        return( 
-          <div className="App playing">
+    function restartGame(){
+        setCurrGame({...currGame, currTeam: 0, currRound: 0})
+        setPoints(points.map(() => {return 0}))
+        setTimer(0)
+        setFirstTurn(true)
+        setStatus('playing')
+    }
+
+    return( 
+        status === 'playing' ?
+          (<div className="App playing">
             <button className="visibility" onClick={() => {setVisibility(!visibility)}}> 
             {visibility?"Hide Card":"Show Card"} </button>
             
@@ -90,17 +115,12 @@ export default function Room(){
             <button className="skip" onClick={() => {setCurrGame({...currGame, currCard: currGame.currCard + 1})}} disabled={!visibility || timer <= 0}> Skip </button>
             <br />
             <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button>
-            {console.log(points)}
           </div>
-        );
-    
-      }else if(status === 'endGame'){
-    
-        return(
+        ) : (
         <div className="App endScreen">
           <EndGameStats points={points} />
           <button onClick={restartGame}> Restart </button>
         </div>
-        );
-      }
+        )
+    );
 }

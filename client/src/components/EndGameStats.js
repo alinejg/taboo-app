@@ -11,7 +11,6 @@ function EndGameStats({ points }){
     return(
         <div className="endGameStats">
             <ul> {listScore} </ul>
-            {console.log(listScore)}
         </div>
     );
 }

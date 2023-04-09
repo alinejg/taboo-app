@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import './App.css';
 import reportWebVitals from './reportWebVitals';
 import { SocketProvider } from './context/SocketContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -11,14 +11,14 @@ import Room from './pages/Room.js';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <SocketProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <SocketProvider>
         <Routes>
           <Route path='/' element={<Start />} />
           <Route path ='/room/:id' element={<Room />} />
         </Routes>
-      </BrowserRouter>
-    </SocketProvider>
+      </SocketProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
