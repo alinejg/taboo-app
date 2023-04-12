@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import Card from '../components/Card.js';
 import Timer from '../components/Timer.js';
 import EndGameStats from '../components/EndGameStats.js';
+import GameInfo from '../components/GameInfo.js';
 
 export default function Room(){
 
@@ -101,7 +102,8 @@ export default function Room(){
 
     return( 
         status === 'playing' ?
-          (<div className="App playing">
+        (<div className='playingBox'>
+          <div className="App playing">
             <button className="visibility" onClick={() => {setVisibility(!visibility)}}> 
             {visibility?"Hide Card":"Show Card"} </button>
             
@@ -114,8 +116,10 @@ export default function Room(){
             <button className="next" onClick={next} disabled={!visibility || timer <= 0}> Next </button>
             <button className="skip" onClick={() => {setCurrGame({...currGame, currCard: currGame.currCard + 1})}} disabled={!visibility || timer <= 0}> Skip </button>
             <br />
-            <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button>
+            <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button>            
           </div>
+          <GameInfo currGame={currGame} points={points}/>
+        </div>
         ) : (
         <div className="App endScreen">
           <EndGameStats points={points} />
