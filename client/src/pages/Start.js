@@ -1,20 +1,14 @@
 import React from 'react';
 import { SocketContext } from '../context/SocketContext';
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 
 function Start(){
 
-    const socket = useContext(SocketContext);
+    const {socket, gameInfo, setGameInfo} = useContext(SocketContext);
 
     const createRoom = () => {
       socket.emit("create-room", { gameInfo });
     }
-
-    const [gameInfo,setGameInfo] = useState({
-      numTeams: 2,
-      numRounds: 2,
-      roundTime: 10,
-    })
 
     return (
         <div className="App startScreen">
