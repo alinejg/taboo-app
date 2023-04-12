@@ -7,8 +7,8 @@ function GameInfo({ currGame, points }){
 
     return(
         <div className='gameInfo'>
-            <p> {currGame.currRound}/{gameInfo.numRounds} Rounds</p>
-            <p> {currGame.currTeam} scored {points[currGame.currTeam]} points (total) </p>
+            <p className='rounds'> {currGame.currRound}/{gameInfo.numRounds} Rounds</p>
+            <p className='points'> Team {currGame.currTeam+1} has {points[currGame.currTeam]} points</p>
         </div>
     )
 }

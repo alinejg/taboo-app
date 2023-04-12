@@ -96,21 +96,22 @@ export default function Room(){
     return( 
         status === 'playing' ?
         (<div className='playingBox'>
-          <div className="App playing">
+          <GameInfo currGame={currGame} points={points}/>
+
+          <div className="App playing">       
+
             <button className="visibility" onClick={() => {setVisibility(!visibility)}}> 
             {visibility?"Hide Card":"Show Card"} </button>
             
             <button className="endGame" onClick={() => {setStatus('endGame')}}> End Game </button>
             <br />
-            <Timer className="timer" timer={timer} />
-    
+            <Timer className="timer" timer={timer} />         
             <Card currCard={currGame.currCard} visibility={visibility}/> 
     
             <button className="next" onClick={next} disabled={!visibility || timer <= 0}> Next </button>
             <button className="skip" onClick={() => {setCurrGame({...currGame, currCard: currGame.currCard + 1}) }} disabled={!visibility || timer <= 0}> Skip </button>
             <br />
             <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button> 
-            <GameInfo currGame={currGame} points={points}/>           
           </div>
 
         </div>

@@ -3,14 +3,15 @@ import React from 'react';
 function EndGameStats({ points }){
 
     const listScore = points.map((point, index) => 
-        <li key={index}>
+        <p key={index}>
             Team {index+1} scored {point} points
-        </li>
+        </p>
         )
 
     return(
         <div className="endGameStats">
-            <ul> {listScore} </ul>
+            <p className='endGameHeading'> Scoreboard </p>
+             {listScore} 
         </div>
     );
 }
