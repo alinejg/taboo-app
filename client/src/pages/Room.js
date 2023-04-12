@@ -78,11 +78,19 @@ export default function Room(){
     }, [timer]);
 
     function next() {
-        setCurrGame({...currGame, currCard: currGame.currCard + 1})
+        setCurrGame({...currGame, currCard: currGame.currCard + 1});
         const newPoints = points.map((p, i) => {
             return (i === currGame.currTeam) ? (p + 1) : p;
         });
-        setPoints(newPoints)
+        setPoints(newPoints);
+    }
+
+    function penalty() {
+      setCurrGame({...currGame, currCard: currGame.currCard + 1});
+      const newPoints = points.map((p, i) => {
+        return (i === currGame.currTeam) ? (p - 1) : p;
+      });
+      setPoints(newPoints);
     }
 
     function restartGame(){
@@ -109,9 +117,10 @@ export default function Room(){
             <Card currCard={currGame.currCard} visibility={visibility}/> 
     
             <button className="next" onClick={next} disabled={!visibility || timer <= 0}> Next </button>
-            <button className="skip" onClick={() => {setCurrGame({...currGame, currCard: currGame.currCard + 1}) }} disabled={!visibility || timer <= 0}> Skip </button>
+            <button className="skip" onClick={penalty} disabled={!visibility || timer <= 0}> Skip </button>
             <br />
             <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button> 
+            <button className="taboo" onClick={penalty} disabled={!visibility || timer <= 0}> Taboo! </button>
           </div>
 
         </div>
