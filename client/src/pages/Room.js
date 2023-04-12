@@ -116,9 +116,10 @@ export default function Room(){
             <button className="next" onClick={next} disabled={!visibility || timer <= 0}> Next </button>
             <button className="skip" onClick={() => {setCurrGame({...currGame, currCard: currGame.currCard + 1})}} disabled={!visibility || timer <= 0}> Skip </button>
             <br />
-            <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button>            
+            <button className="startTurn" onClick={startTurn} disabled={timer > 0}> Start Timer </button> 
+            <GameInfo currGame={currGame} points={points}/>           
           </div>
-          <GameInfo currGame={currGame} points={points}/>
+
         </div>
         ) : (
         <div className="App endScreen">
