@@ -1,6 +1,7 @@
 # Taboo App
 
 This project is an web application to play the game [Taboo](https://en.wikipedia.org/wiki/Taboo_(game)) 
+
 Clients are able to navigate to personal game rooms, share the link and play in real-time with other users
 
 ## Technologies Used
